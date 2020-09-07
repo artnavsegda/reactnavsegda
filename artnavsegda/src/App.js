@@ -3,11 +3,11 @@ import './App.css';
 
 class App extends Component {
   myChangeHandler = (event) => {
-    this.timerID = setTimeout(()=>{
+    clearTimeout(this.timerID);
+    this.timerID = setTimeout((myValue)=>{
       console.log("time out");
-    }, 1000);
-    console.log(event.target.value);
-    
+      console.log(myValue);
+    }, 1000, event.target.value);
   }
   render() {
     return (
