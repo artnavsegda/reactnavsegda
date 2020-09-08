@@ -7,6 +7,11 @@ class App extends Component {
     this.timerID = setTimeout((myValue)=>{
       console.log("time out");
       console.log(myValue);
+
+      fetch("https://artnavsegda.herokuapp.com/q?ask=" + myValue)
+      .then(response => response.json())
+      .then(variants => console.log(variants));
+
     }, 1000, event.target.value);
   }
   render() {
@@ -16,6 +21,7 @@ class App extends Component {
           <form>
             <input type="text" onChange={this.myChangeHandler} />
           </form>
+          
         </header>
       </div>
     );
