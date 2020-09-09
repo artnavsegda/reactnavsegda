@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <form>
-          <input type="text" onChange={(event)={
+          <input type="text" onChange={(event)=>{
             clearTimeout(timerID)
             setTimerId(setTimeout((askValue) => {
               fetch("https://artnavsegda.herokuapp.com/q?ask=" + askValue)
