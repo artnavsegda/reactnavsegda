@@ -16,7 +16,7 @@ function App() {
               .then(response => response.json())
               .then(variants => setSuggestions(variants.toString()))
             }, 1000, event.target.value))
-          }} />
+          }} /><label>loading</label>
         </form>
         <div>{suggestions}</div>
       </header>
