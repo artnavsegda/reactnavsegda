@@ -19,7 +19,7 @@ function App() {
               .then(response => {
                 if (!response.ok)
                   throw new Error("connect failure")
-                response.json()
+                return response.json()
               })
               .then(variants => {
                 setSuggestions(variants.toString())
