@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
+import { connect, Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 
 const initialState = {
   url: '',
@@ -78,17 +78,29 @@ const store = createStore(
 
 sagaMiddleware.run(watchFetchDog)
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello World!</h1>
-    </div>
-  )
+class App extends React.Component {
+  render () {
+    return (
+      <div>
+        <button onClick={() => this.props.dispatch(fetchDog())}>Show Dog</button>
+          {this.props.loading 
+            ? <p>Loading...</p> 
+            : this.props.error
+                ? <p>Error, try again</p>
+                : <p><img src={this.props.url}/></p>}
+      </div>
+    )
+  }
 }
+
+const ConnectedApp = connect((state) => {
+  console.log(state);
+  return state;
+})(App);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ConnectedApp />
   </Provider>,
   document.getElementById('root')
 )
