@@ -18,4 +18,16 @@ const requestPodcastsError = () => {
     return { type: 'REQUESTED_PODCASTS_FAILED' }
 };
 
-export { fetchPodcasts, requestPodcasts, requestPodcastsSuccess, requestPodcastsError, fetchEpisodes };
+const requestEpisodes = () => {
+    return { type: 'REQUESTED_EPISODES' }
+};
+
+const requestEpisodesSuccess = (data) => {
+    return { type: 'REQUESTED_EPISODES_SUCCEEDED', episodes: data }
+};
+
+const requestEpisodesError = () => {
+    return { type: 'REQUESTED_EPISODES_FAILED' }
+};
+
+export { fetchPodcasts, requestPodcasts, requestPodcastsSuccess, requestPodcastsError, fetchEpisodes, requestEpisodes, requestEpisodesSuccess, requestEpisodesError };

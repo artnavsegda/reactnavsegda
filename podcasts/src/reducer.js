@@ -1,7 +1,9 @@
 const initialState = {
   podcasts: '',
+  episodes: '',
   loading: false,
   error: false,
+  episodesLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,6 +26,26 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: true,
       };
+      case 'REQUESTED_EPISODES':
+        return {
+          podcasts: 'loading episodes',
+          loading: true,
+          error: false,
+        };
+      case 'REQUESTED_EPISODES_SUCCEEDED':
+        return {
+          podcasts: 'loaded episodes',
+          episodes: action.episodes,
+          loading: false,
+          error: false,
+        };
+      case 'REQUESTED_EPISODES_FAILED':
+        return {
+          podcasts: '',
+          episodes: '',
+          loading: false,
+          error: true,
+        };
     default:
       return state
   }

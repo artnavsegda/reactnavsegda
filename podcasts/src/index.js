@@ -5,7 +5,7 @@ import { connect, Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 
 import reducer from './reducer'
-import watchFetchPodcasts from './sagas'
+import { watchFetchPodcasts, watchFetchEpisodes } from './sagas'
 import {fetchPodcasts, fetchEpisodes} from './actions'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -16,12 +16,13 @@ const store = createStore(
 )
 
 sagaMiddleware.run(watchFetchPodcasts)
+sagaMiddleware.run(watchFetchEpisodes)
 
 function Link(props) {
   return (
     <div>
         {props.link.title} ({props.link.id})
-        <button onClick={() => props.dispatch(fetchEpisodes(props.link.id))}>list podcasts</button>
+        <button onClick={() => props.dispatch(fetchEpisodes(props.link.id))}>list episodes</button>
     </div>
   )
 }

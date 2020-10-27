@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 
-import {requestPodcasts, requestPodcastsSuccess, requestPodcastsError} from './actions'
+import {requestPodcasts, requestPodcastsSuccess, requestPodcastsError, requestEpisodes, requestEpisodesSuccess, requestEpisodesError} from './actions'
 
 function* fetchPodcastsAsync(action) {
     try {
@@ -20,4 +20,22 @@ function* watchFetchPodcasts() {
     yield takeEvery('FETCHED_PODCASTS', fetchPodcastsAsync)
 }
 
-export default watchFetchPodcasts
+function* fetchEpisodesAsync(action) {
+    try {
+        yield put(requestEpisodes());
+        const data = yield call(() => {
+            return fetch('https://api.simplecast.com/podcasts/c3161c7d-d5ac-46a9-82c1-b18cbcc93b5c/episodes')
+                    .then(res => res.json())
+            }
+        )
+        yield put(requestEpisodesSuccess(data));
+    } catch (error) {
+        yield put(requestEpisodesError())
+    }
+}
+
+function* watchFetchEpisodes() {
+    yield takeEvery('FETCHED_EPISODES', fetchEpisodesAsync)
+}
+
+export { watchFetchPodcasts, watchFetchEpisodes };
