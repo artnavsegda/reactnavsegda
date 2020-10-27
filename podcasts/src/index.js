@@ -17,19 +17,17 @@ const store = createStore(
 
 sagaMiddleware.run(watchFetchPodcasts)
 
-class App extends React.Component {
-  render () {
-    return (
-      <div>
-        <button onClick={() => this.props.dispatch(fetchPodcasts())}>Show Podcasts</button>
-          {this.props.loading 
-            ? <p>Loading...</p> 
-            : this.props.error
-                ? <p>Error, try again</p>
-                : <p>{JSON.stringify(this.props.podcasts.collection)}</p>}
-      </div>
-    )
-  }
+function App (props) {
+  return (
+    <div>
+      <button onClick={() => props.dispatch(fetchPodcasts())}>Show Podcasts</button>
+        {props.loading 
+          ? <p>Loading...</p> 
+          : props.error
+              ? <p>Error, try again</p>
+              : <p>{JSON.stringify(props.podcasts.collection)}</p>}
+    </div>
+  )
 }
 
 const ConnectedApp = connect((state) => {
