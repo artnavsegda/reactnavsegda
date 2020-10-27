@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux'
 import { connect, Provider } from 'react-redux'
@@ -17,6 +17,18 @@ const store = createStore(
 
 sagaMiddleware.run(watchFetchPodcasts)
 
+class Link extends Component {
+  render() {
+    return (
+      <div>
+        <div>
+          {this.props.link.title} ({this.props.link.id})
+        </div>
+      </div>
+    )
+  }
+}
+
 function App (props) {
   return (
     <div>
@@ -25,7 +37,10 @@ function App (props) {
           ? <p>Loading...</p> 
           : props.error
               ? <p>Error, try again</p>
-              : <p>{JSON.stringify(props.podcasts.collection)}</p>}
+              : 
+              <p>
+{/*                 {props.podcasts.collection.map(link => <Link key={link.id} link={link} />)} */}
+                {JSON.stringify(props.podcasts.collection)}</p>}
     </div>
   )
 }
