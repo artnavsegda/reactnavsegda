@@ -1,8 +1,5 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 
-import logo from './logo.svg';
-import './App.css';
-
 function App() {
   return (
     <div className="App">
