@@ -1,18 +1,8 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 
+import {requestPodcasts, requestPodcastsSuccess, requestPodcastsError} from './actions'
+
 let authHeader = new Headers({'Authorization':'Bearer eyJhcGlfa2V5IjoiNzVkMzc3N2M3NWFhM2QwOTkxOWEyZTI4ZjhiM2M1YTkifQ=='})
-
-const requestPodcasts = () => {
-    return { type: 'REQUESTED_PODCASTS' }
-};
-
-const requestPodcastsSuccess = (data) => {
-    return { type: 'REQUESTED_PODCASTS_SUCCEEDED', podcasts: data }
-};
-
-const requestPodcastsError = () => {
-    return { type: 'REQUESTED_PODCASTS_FAILED' }
-};
 
 function* fetchPodcastsAsync() {
     try {

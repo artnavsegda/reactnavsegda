@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 
 import reducer from './reducer'
 import watchFetchPodcasts from './sagas'
-import fetchPodcasts from './actions'
+import {fetchPodcasts} from './actions'
 
 const sagaMiddleware = createSagaMiddleware()
 
