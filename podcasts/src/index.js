@@ -41,7 +41,7 @@ const requestDog = () => {
 };
 
 const requestDogSuccess = (data) => {
-  return { type: 'REQUESTED_DOG_SUCCEEDED', url: data.message }
+  return { type: 'REQUESTED_DOG_SUCCEEDED', url: data }
 };
 
 const requestDogError = () => {
@@ -56,11 +56,13 @@ function* watchFetchDog() {
   yield takeEvery('FETCHED_DOG', fetchDogAsync)
 }
 
+let authHeader = new Headers({'Authorization':'Bearer eyJhcGlfa2V5IjoiNzVkMzc3N2M3NWFhM2QwOTkxOWEyZTI4ZjhiM2M1YTkifQ=='})
+
 function* fetchDogAsync() {
   try {
     yield put(requestDog());
     const data = yield call(() => {
-      return fetch('https://dog.ceo/api/breeds/image/random')
+      return fetch('https://api.simplecast.com/podcasts/', {headers: authHeader})
               .then(res => res.json())
       }
     )
@@ -87,7 +89,7 @@ class App extends React.Component {
             ? <p>Loading...</p> 
             : this.props.error
                 ? <p>Error, try again</p>
-                : <p><img src={this.props.url}/></p>}
+                : <p>{JSON.stringify(this.props.url)}</p>}
       </div>
     )
   }
