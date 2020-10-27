@@ -21,9 +21,8 @@ class Link extends Component {
   render() {
     return (
       <div>
-        <div>
           {this.props.link.title} ({this.props.link.id})
-        </div>
+          <button>list podcasts</button>
       </div>
     )
   }
@@ -38,10 +37,10 @@ function App (props) {
           : props.error
               ? <p>Error, try again</p>
               : 
-              <p>
-                {props.podcasts.collection ? props.podcasts.collection.map(link => <Link key={link.id} link={link} />) : ""}
+              <div>
+                {props.podcasts.collection ? props.podcasts.collection.map(link => <Link key={link.id} link={link} />) : "click to load"}
                 {/* {JSON.stringify(props.podcasts.collection)} */}
-              </p>}
+              </div>}
     </div>
   )
 }
