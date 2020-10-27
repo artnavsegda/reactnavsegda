@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux'
 import { connect, Provider } from 'react-redux'
@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 
 import reducer from './reducer'
 import watchFetchPodcasts from './sagas'
-import {fetchPodcasts} from './actions'
+import {fetchPodcasts, fetchEpisodes} from './actions'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -17,28 +17,30 @@ const store = createStore(
 
 sagaMiddleware.run(watchFetchPodcasts)
 
-class Link extends Component {
-  render() {
-    return (
-      <div>
-          {this.props.link.title} ({this.props.link.id})
-          <button>list podcasts</button>
-      </div>
-    )
-  }
+function Link(props) {
+  return (
+    <div>
+        {props.link.title} ({props.link.id})
+        <button onClick={() => props.dispatch(fetchEpisodes(props.link.id))}>list podcasts</button>
+    </div>
+  )
 }
+
+const ConnectedLink = connect()(Link)
+
+const authKey = 'eyJhcGlfa2V5IjoiNzVkMzc3N2M3NWFhM2QwOTkxOWEyZTI4ZjhiM2M1YTkifQ==';
 
 function App (props) {
   return (
     <div>
-      <button onClick={() => props.dispatch(fetchPodcasts())}>Show Podcasts</button>
+      <button onClick={() => props.dispatch(fetchPodcasts(authKey))}>Show Podcasts</button>
         {props.loading 
           ? <p>Loading...</p> 
           : props.error
               ? <p>Error, try again</p>
               : 
               <div>
-                {props.podcasts.collection ? props.podcasts.collection.map(link => <Link key={link.id} link={link} />) : "click to load"}
+                {props.podcasts.collection ? props.podcasts.collection.map(link => <ConnectedLink key={link.id} link={link} />) : "click to load"}
                 {/* {JSON.stringify(props.podcasts.collection)} */}
               </div>}
     </div>

@@ -1,5 +1,9 @@
-const fetchPodcasts = () => {
-    return { type: 'FETCHED_PODCASTS' }
+const fetchPodcasts = (authKey) => {
+    return { type: 'FETCHED_PODCASTS', key: authKey }
+};
+
+const fetchEpisodes = (podcastID) => {
+    return { type: 'FETCHED_EPISODES', id: podcastID }
 };
 
 const requestPodcasts = () => {
@@ -14,4 +18,4 @@ const requestPodcastsError = () => {
     return { type: 'REQUESTED_PODCASTS_FAILED' }
 };
 
-export { fetchPodcasts, requestPodcasts, requestPodcastsSuccess, requestPodcastsError };
+export { fetchPodcasts, requestPodcasts, requestPodcastsSuccess, requestPodcastsError, fetchEpisodes };

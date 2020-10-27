@@ -2,13 +2,11 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 
 import {requestPodcasts, requestPodcastsSuccess, requestPodcastsError} from './actions'
 
-let authHeader = new Headers({'Authorization':'Bearer eyJhcGlfa2V5IjoiNzVkMzc3N2M3NWFhM2QwOTkxOWEyZTI4ZjhiM2M1YTkifQ=='})
-
-function* fetchPodcastsAsync() {
+function* fetchPodcastsAsync(action) {
     try {
         yield put(requestPodcasts());
         const data = yield call(() => {
-            return fetch('https://api.simplecast.com/podcasts/', {headers: authHeader})
+            return fetch('https://api.simplecast.com/podcasts/', {headers: new Headers({'Authorization':'Bearer ' + action.key})})
                     .then(res => res.json())
             }
         )
