@@ -6,28 +6,28 @@ import createSagaMiddleware from 'redux-saga'
 import { call, put, takeEvery } from 'redux-saga/effects'
 
 const initialState = {
-  url: '',
+  podcasts: '',
   loading: false,
   error: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'REQUESTED_DOG':
+    case 'REQUESTED_PODCASTS':
       return {
-        url: '',
+        podcasts: '',
         loading: true,
         error: false,
       };
-    case 'REQUESTED_DOG_SUCCEEDED':
+    case 'REQUESTED_PODCASTS_SUCCEEDED':
       return {
-        url: action.url,
+        podcasts: action.podcasts,
         loading: false,
         error: false,
       };
-    case 'REQUESTED_DOG_FAILED':
+    case 'REQUESTED_PODCASTS_FAILED':
       return {
-        url: '',
+        podcasts: '',
         loading: false,
         error: true,
       };
@@ -36,39 +36,39 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-const requestDog = () => {
-  return { type: 'REQUESTED_DOG' }
+const requestPodcasts = () => {
+  return { type: 'REQUESTED_PODCASTS' }
 };
 
-const requestDogSuccess = (data) => {
-  return { type: 'REQUESTED_DOG_SUCCEEDED', url: data }
+const requestPodcastsSuccess = (data) => {
+  return { type: 'REQUESTED_PODCASTS_SUCCEEDED', podcasts: data }
 };
 
-const requestDogError = () => {
-  return { type: 'REQUESTED_DOG_FAILED' }
+const requestPodcastsError = () => {
+  return { type: 'REQUESTED_PODCASTS_FAILED' }
 };
 
-const fetchDog = () => {
-  return { type: 'FETCHED_DOG' }
+const fetchPodcasts = () => {
+  return { type: 'FETCHED_PODCASTS' }
 };
 
-function* watchFetchDog() {
-  yield takeEvery('FETCHED_DOG', fetchDogAsync)
+function* watchFetchPodcasts() {
+  yield takeEvery('FETCHED_PODCASTS', fetchPodcastsAsync)
 }
 
 let authHeader = new Headers({'Authorization':'Bearer eyJhcGlfa2V5IjoiNzVkMzc3N2M3NWFhM2QwOTkxOWEyZTI4ZjhiM2M1YTkifQ=='})
 
-function* fetchDogAsync() {
+function* fetchPodcastsAsync() {
   try {
-    yield put(requestDog());
+    yield put(requestPodcasts());
     const data = yield call(() => {
       return fetch('https://api.simplecast.com/podcasts/', {headers: authHeader})
               .then(res => res.json())
       }
     )
-    yield put(requestDogSuccess(data));
+    yield put(requestPodcastsSuccess(data));
   } catch (error) {
-    yield put(requestDogError())
+    yield put(requestPodcastsError())
   }
 }
 
@@ -78,18 +78,18 @@ const store = createStore(
   applyMiddleware(sagaMiddleware)
 )
 
-sagaMiddleware.run(watchFetchDog)
+sagaMiddleware.run(watchFetchPodcasts)
 
 class App extends React.Component {
   render () {
     return (
       <div>
-        <button onClick={() => this.props.dispatch(fetchDog())}>Show Dog</button>
+        <button onClick={() => this.props.dispatch(fetchPodcasts())}>Show Podcasts</button>
           {this.props.loading 
             ? <p>Loading...</p> 
             : this.props.error
                 ? <p>Error, try again</p>
-                : <p>{JSON.stringify(this.props.url)}</p>}
+                : <p>{JSON.stringify(this.props.podcasts.collection)}</p>}
       </div>
     )
   }
