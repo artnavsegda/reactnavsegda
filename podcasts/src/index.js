@@ -39,8 +39,9 @@ function App (props) {
               ? <p>Error, try again</p>
               : 
               <p>
-{/*                 {props.podcasts.collection.map(link => <Link key={link.id} link={link} />)} */}
-                {JSON.stringify(props.podcasts.collection)}</p>}
+                {props.podcasts.collection ? props.podcasts.collection.map(link => <Link key={link.id} link={link} />) : ""}
+                {/* {JSON.stringify(props.podcasts.collection)} */}
+              </p>}
     </div>
   )
 }
